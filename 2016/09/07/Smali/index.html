@@ -240,6 +240,88 @@
     <div class="article-entry" itemprop="articleBody">
       
           
+          引入文件_partial\article.ejs
+    
+        <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+    
+
+
+    
+    
+    
+
+<div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var toc_button = document.getElementById("tocButton");
+    var toc_div = document.getElementById("toc");
+    toc_button.onclick=function() {
+        if (toc_div.style.display == "none") {
+            toc_div.style.display = "block";
+            toc_button.value = "隐藏目录";
+            document.getElementById("switch-btn").style.display = "none";
+            document.getElementById("switch-area").style.display = "none";
+        }
+        else {
+            toc_div.style.display = "none";
+            toc_button.value = "显示目录";
+            document.getElementById("switch-btn").style.display = "block";
+            document.getElementById("switch-area").style.display = "block";
+        }
+    }
+
+    if ($(".toc").length < 1) {
+        $("#toc").css("display","none");
+        $("#tocButton").css("display","none");
+        $(".switch-btn").css("display","block");
+        $(".switch-area").css("display","block");
+    }
+</script>
+
+
         <ul>
 <li><a id="more"></a>
 <the rest="" of="" contents="" |="" 余下全文=""><br><img src="/img/Smail1.png" alt="Alt text"><br>这些标识符和后面的方法的返回值相配合<br>Lpackage/name/ObjectName;-&gt;MethodName(III)Z<br>在这个例子中，你应该识别出“ Lpackage/name/ObjectName; 是一个类， MethodName明显是一个方法名，(III)Z是方法的签名，‘III’在这个例子中是三个整形参数，Z是表示返回一个布尔类型的返回值。<br><img src="/img/smali2.png" alt="Alt text"><br>考虑一下 一个是整形 和字符型<br>2、smali中的成员变量<br><img src="/img/smali3.png" alt="Alt text"><br><img src="/img/smali4.png" alt="Alt text"><br>sget-object就是用来获取变量值并保存到紧接着的参数的寄存器中，在这里，把上面出现的PREFS_INSTALLATION_ID这个String成员变量获取并放到v0这个寄存器中，注意：前面需要该变量所属的类的类型，后面需要加一个冒号和该成员变量的类型，中间是“-&gt;”表示所属关系。</the></li>
@@ -383,6 +465,7 @@
     <script>
         
     </script>
+
 </div>
       <footer id="footer">
     <div class="outer">
