@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: 汇编 | Shurima</title>
+  <title>不明真相的Dalvik | Shurima</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Shurima">
-<meta property="og:url" content="http://yoursite.com/tags/汇编/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="不明真相的Dalvik">
+<meta property="og:url" content="http://yoursite.com/2016/09/29/不明真相的Dalvik语法/index.html">
 <meta property="og:site_name" content="Shurima">
+<meta property="og:updated_time" content="2016-09-29T05:27:39.416Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shurima">
+<meta name="twitter:title" content="不明真相的Dalvik">
   
     <link rel="alternative" href="/atom.xml" title="Shurima" type="application/atom+xml">
   
@@ -35,9 +36,9 @@
           fancybox: true,
           animate: true,
           isHome: false,
-          isPost: false,
+          isPost: true,
           isArchive: false,
-          isTag: true,
+          isTag: false,
           isCategory: false,
           open_in_new: false
       }
@@ -190,57 +191,209 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-不明真相的Dalvik语法" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2016/09/07/Smali/" class="archive-article-date">
-      <time datetime="2016-09-07T15:46:41.663Z" itemprop="datePublished">09-07</time>
+    <div class="article-meta">
+      <a href="/2016/09/29/不明真相的Dalvik语法/" class="article-date">
+      <time datetime="2016-09-29T05:28:05.950Z" itemprop="datePublished">2016-09-29</time>
 </a>
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2016/09/07/Smali/">Smali</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      不明真相的Dalvik
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/安卓/">安卓</a><a class="article-category-link" href="/categories/安卓/汇编/">汇编</a>
+    <a class="article-category-link" href="/categories/安卓/">安卓</a><a class="article-category-link" href="/categories/安卓/Dalvik/">Dalvik</a>
     </div>
 
 
-          
+        
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/汇编/">汇编</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新/">萌新</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <ul>
+<li><a id="more"></a>
+这感觉就像是最初看汇编的感觉一样一样的</li>
+<li><!-- more -->
+1.Dalvik使用的寄存器是32位的,64位类型用两个&lt;相邻&gt;寄存器表示<br>2.Dalvik由65535个虚拟寄存器<br>3.这取消了栈结构使用,采用寄存器来存放值的设定特别奇怪</li>
+<li><!-- more -->
+假设这个函数由M个寄存器,N个参数,根据Dalvik规定,参数使用后面N个寄存器,局部变量从v0开始取M-N个寄存器<br>比如一个函数使用了5个寄存器,2个显式的整形,3个参数,局部变量使用前2个,参数用后面3个</li>
+<li><!-- more -->
+关于Java类,Dalvik字节码用L表示,这些类在Java代码中用packname.name.ObjectName 方式引用.<br>其中packname/name表示对象所在的包,ObjectName表示对象的名称<br>举个小例子<br>method(I[[IILjava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;<br>I表示int ，这句话翻译成Java代码就是，II就是二维int数组<br>String method(int int[][] String, Object[])</li>
+<li><!-- more -->
+<p>检测到一大堆汇编语句<br>move VA VB VA=VB,都是四位<br>move-wide VA,VB 为4位的寄存器！对 ！赋值 都是四位<br>有一堆关于寄存器位数的就不累述了。<br>move-object 为对象赋值<br>move-result VA 将上一个invoke类型操作指令的非对象结果赋值<br>invoke 是返回一个**类型的对象。<br>这就必须要再来看看方法调用指令，<br>invoke-viretual 调用实例的虚方法<br>invoke-super 调用实例的父方法<br>invoke-direct 直接调用实例的直接方法（构造方法？）<br>invoke-static 调用实例的静态方法。<br>invoke-interface 调用实例的接口方法</p>
+</li>
+<li><!-- more -->
+<p>这其实省略了跳转还有定义数据，总觉得要搬运到博客上量太大，于是就自己看咯~</p>
+</li>
+</ul>
+
+      
+    </div>
+    
   </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
+        <p><span>发布时间:</span>2016年09月29日 - 13时28分</p>
+        <p><span>最后更新:</span>2016年09月29日 - 13时27分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/29/不明真相的Dalvik语法/" title="不明真相的Dalvik">http://yoursite.com/2016/09/29/不明真相的Dalvik语法/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/29/不明真相的Dalvik语法/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2016/09/28/生日快乐/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">亲爱的生日快乐</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
 
     
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/09/29/不明真相的Dalvik语法/" data-title="不明真相的Dalvik" data-url="http://yoursite.com/2016/09/29/不明真相的Dalvik语法/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"null"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2016/09/28/生日快乐/" title="下一篇: 亲爱的生日快乐">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/Android基础/">安卓基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
 
 </div>
       <footer id="footer">
@@ -286,17 +439,6 @@
         };
     })
 </script>
-
-    <button class="hide-labels">TAG 开关</button>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js">
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("button").click(function() {
-                $(".article-info").toggle(200);
-            });
-        });
-    </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
