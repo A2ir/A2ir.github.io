@@ -9,7 +9,7 @@
 <meta property="og:title" content="Android程序生成与Dex结构相关（简略）">
 <meta property="og:url" content="http://yoursite.com/2016/09/30/Android可执行文件/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-09-30T17:27:44.387Z">
+<meta property="og:updated_time" content="2016-09-30T17:30:00.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android程序生成与Dex结构相关（简略）">
   
@@ -235,8 +235,9 @@
           
         <ul>
 <li><a id="more"></a>
-<the rest="" of="" contents="" |="" 余下全文=""><br>萌新艰难的爬行到了Android 可执行文件这边<br>害怕.jpg<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————</the></li>
+<the rest="" of="" contents="" |="" 余下全文=""><br>萌新艰难的爬行到了Android 可执行文件这边<br>害怕.jpg</the></li>
 </ul>
+<p>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————</p>
 <p>首先来看一个生成Andriod 程序的步骤<br>首先<br>生成一个R.java文件，调用aapt源码目录下的Resource.cpp中的buildResource函数，检查AndriodMainifest.XML合法性<br>然后对res目录下的资源子目录进行处理。处理函数为makeFileResources()，处理内容为资源文件名合法性检查（没啥用）</p>
 <p>不行 我要简练一点。我觉得需要注意的就是     最后的compileXmlFile()对res目录的子目录的xml分别编译，和经过compileResourceFile()编译过得res和asserts目录下的资源生成resources.arsc文件打包压缩成resouces.ap_文件</p>
 <p>（貌似并不简练啊！需要总结）</p>
@@ -258,7 +259,7 @@
         <p><span>本文标题:</span><a href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年09月30日 - 23时56分</p>
-        <p><span>最后更新:</span>2016年10月01日 - 01时27分</p>
+        <p><span>最后更新:</span>2016年10月01日 - 01时30分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/09/30/Android可执行文件/" title="Android程序生成与Dex结构相关（简略）">http://yoursite.com/2016/09/30/Android可执行文件/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/30/Android可执行文件/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
