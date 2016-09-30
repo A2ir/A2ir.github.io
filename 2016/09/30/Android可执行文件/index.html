@@ -3,20 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>CVE-2010-3333调试，复现 | Shurima</title>
+  <title>不明真相的Dalvik | Shurima</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="article">
-<meta property="og:title" content="CVE-2010-3333调试，复现">
-<meta property="og:url" content="http://yoursite.com/2016/09/25/CVE-2010-3333/index.html">
+<meta property="og:title" content="不明真相的Dalvik">
+<meta property="og:url" content="http://yoursite.com/2016/09/30/Android可执行文件/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:image" content="http://yoursite.com/img/cve2.png">
-<meta property="og:image" content="http://yoursite.com/img/cve3.png">
-<meta property="og:image" content="http://yoursite.com/img/cve4.png">
-<meta property="og:image" content="http://yoursite.com/img/cve5.png">
-<meta property="og:updated_time" content="2016-09-25T05:41:51.588Z">
+<meta property="og:updated_time" content="2016-09-30T15:54:27.443Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CVE-2010-3333调试，复现">
-<meta name="twitter:image" content="http://yoursite.com/img/cve2.png">
+<meta name="twitter:title" content="不明真相的Dalvik">
   
     <link rel="alternative" href="/atom.xml" title="Shurima" type="application/atom+xml">
   
@@ -196,11 +191,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-CVE-2010-3333" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Android可执行文件" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/25/CVE-2010-3333/" class="article-date">
-      <time datetime="2016-09-25T04:06:02.725Z" itemprop="datePublished">2016-09-25</time>
+      <a href="/2016/09/30/Android可执行文件/" class="article-date">
+      <time datetime="2016-09-30T15:56:08.523Z" itemprop="datePublished">2016-09-30</time>
 </a>
     </div>
   
@@ -213,7 +208,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CVE-2010-3333调试，复现
+      不明真相的Dalvik
     </h1>
   
 
@@ -222,13 +217,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Win/">Win</a><a class="article-category-link" href="/categories/Win/CVE/">CVE</a>
+    <a class="article-category-link" href="/categories/安卓/">安卓</a><a class="article-category-link" href="/categories/安卓/Dex/">Dex</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/复现/">复现</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新/">萌新</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新/">萌新</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -240,12 +235,18 @@
           
         <ul>
 <li><a id="more"></a>
-<p>在漏洞战争这本书上看到这个洞，发现难度不大，于是决定来调试一番<br>首先是寻找漏洞存在的原因<br>经过资料知道漏洞点在 30ed442c这个位置，由于在解析pFragments属性值时候没有计算内存空间大小，存在栈溢出。<br>现在需要更多的细节，固打开WinDgb 进行调试。<br><img src="/img/cve2.png" alt="Alt text"><br>此处可以看到以下几个值  eax的值来自于POC的样本数据<br><img src="/img/cve3.png" alt="Alt text"><br>接着ecx取出eax的值并且执行右移两位的操作<br>于是理论上这个空间的大小是ffff进行右移4位，也就是3FFF，实际上用不了这么大。<br>内存的起始读入在edi 也就是00123dc0.<br>我们可以轻松的定位到ebp下方的返回地址<br><img src="/img/cve4.png" alt="Alt text"><br>然而这里并不是这个会崩溃的函数的返回地址。事实上这个函数的返回地址再上面 即00123da0<br>所以并不能够覆盖到这个地址。</p>
-</li>
-<li><!-- more -->
-<p>但是控制EIP就必须要控制跳转。于是进入下面的函数进行分析、<br>首先来到30F0B5FB这个地址，发现下面有一个call 地址在30f0b611,这个我们姑且叫做检验函数。<br>进入这个函数，分析发现地址位于30f0b7c6的函数进入程序会报错，必须不让它跳过。<br>来到下面地址为30D0B7C6 分析发现这个跳转发生后有一个可以跳转到任意位置的CALL 地址为30F0B7E5<br>于是我们只需要构造适当的exp就可以达到控制EIP的目的。<br><img src="/img/cve5.png" alt="Alt text"></p>
-</li>
+<the rest="" of="" contents="" |="" 余下全文=""><br>萌新艰难的爬行到了Android 可执行文件这边<br>害怕.jpg<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————</the></li>
 </ul>
+<p>首先来看一个生成Andriod 程序的步骤<br>首先<br>生成一个R.java文件，调用aapt源码目录下的Resource.cpp中的buildResource函数，检查AndriodMainifest.XML合法性<br>然后对res目录下的资源子目录进行处理。处理函数为makeFileResources()，处理内容为资源文件名合法性检查（没啥用）</p>
+<p>不行 我要简练一点。我觉得需要注意的就是     最后的compileXmlFile()对res目录的子目录的xml分别编译，和经过compileResourceFile()编译过得res和asserts目录下的资源生成resources.arsc文件打包压缩成resouces.ap_文件</p>
+<p>（貌似并不简练啊！需要总结）</p>
+<p>第二步<br>处理aidl文件，生成相应的java文件</p>
+<p>第三步<br>调用javac编译工程下的src目录下的所有java源文件</p>
+<p>第四步<br>//终于轮到我们的Dalvik登场了。<br>转换所有的class文件，生成classes.dex</p>
+<p>第五步<br>打包生成APK</p>
+<p>第六步<br>对APK文件进行签名</p>
+<p>第七步<br>对签名后的APK进行处理<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————<br>//前排提示，后面感觉有类似于PE文件结构的东西出现，那时候我看WIN的PE看了若干天都没看明白<br>//而且还会忘<br>DEX文件格式<br>这里就写一下关于dex文件用到的数据类型中的<br>sleb128  有符号LEB128 可变长度1-5个字节<br>uleb128  无符号LEB128 可变长度1-5个字节<br>uleb128p1  无符号LEB128+1 可变1-5个字节<br>这些都是dex特有的LEB128，每个LEB128由5个字节组成，组合在一起可以表示一个32位的程序<br>每个字节只有7位有效，开头为1则表示需要后面的字节，为0则不需要 直到第五位</p>
+<p>//关于DEX文件整体结构还是不搬运上来了。。我选择狗带</p>
 
       
     </div>
@@ -254,13 +255,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></p>
+        <p><span>本文标题:</span><a href="/2016/09/30/Android可执行文件/">不明真相的Dalvik</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
-        <p><span>发布时间:</span>2016年09月25日 - 12时06分</p>
-        <p><span>最后更新:</span>2016年09月25日 - 13时41分</p>
+        <p><span>发布时间:</span>2016年09月30日 - 23时56分</p>
+        <p><span>最后更新:</span>2016年09月30日 - 23时54分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/09/25/CVE-2010-3333/" title="CVE-2010-3333调试，复现">http://yoursite.com/2016/09/25/CVE-2010-3333/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/25/CVE-2010-3333/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/30/Android可执行文件/" title="不明真相的Dalvik">http://yoursite.com/2016/09/30/Android可执行文件/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/30/Android可执行文件/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -273,18 +274,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2016/09/28/生日快乐/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          亲爱的生日快乐
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/09/17/Android基础/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">安卓基础</div>
+    <a href="/2016/09/29/不明真相的Dalvik语法/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">不明真相的Dalvik</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -343,7 +335,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/09/25/CVE-2010-3333/" data-title="CVE-2010-3333调试，复现" data-url="http://yoursite.com/2016/09/25/CVE-2010-3333/"></div>
+    <div class="ds-thread" data-thread-key="2016/09/30/Android可执行文件/" data-title="不明真相的Dalvik" data-url="http://yoursite.com/2016/09/30/Android可执行文件/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -366,13 +358,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/09/28/生日快乐/" title="上一篇: 亲爱的生日快乐">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/09/17/Android基础/" title="下一篇: 安卓基础">
+            <a href="/2016/09/29/不明真相的Dalvik语法/" title="下一篇: 不明真相的Dalvik">
                 <i class="fa fa-angle-right"></i>
             </a>
         
