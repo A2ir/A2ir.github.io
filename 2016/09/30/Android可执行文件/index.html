@@ -9,7 +9,7 @@
 <meta property="og:title" content="Android程序生成与Dex结构相关（简略）">
 <meta property="og:url" content="http://yoursite.com/2016/09/30/Android可执行文件/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-09-30T17:30:00.428Z">
+<meta property="og:updated_time" content="2016-10-01T17:00:00.960Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android程序生成与Dex结构相关（简略）">
   
@@ -127,7 +127,7 @@
 		
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/安卓/" style="font-size: 15px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
+                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/安卓/" style="font-size: 13.33px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 16.67px;">逆向</a>
                     </div>
                 </section>
                 
@@ -247,7 +247,9 @@
 <p>第五步<br>打包生成APK</p>
 <p>第六步<br>对APK文件进行签名</p>
 <p>第七步<br>对签名后的APK进行处理<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————<br>//前排提示，后面感觉有类似于PE文件结构的东西出现，那时候我看WIN的PE看了若干天都没看明白<br>//而且还会忘<br>DEX文件格式<br>这里就写一下关于dex文件用到的数据类型中的<br>sleb128  有符号LEB128 可变长度1-5个字节<br>uleb128  无符号LEB128 可变长度1-5个字节<br>uleb128p1  无符号LEB128+1 可变1-5个字节<br>这些都是dex特有的LEB128，每个LEB128由5个字节组成，组合在一起可以表示一个32位的程序<br>每个字节只有7位有效，开头为1则表示需要后面的字节，为0则不需要 直到第五位</p>
-<p>//关于DEX文件整体结构还是不搬运上来了。。我选择狗带</p>
+<p>//关于DEX文件整体结构还是不搬运上来了。。我选择狗带<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————</p>
+<p>最后的最后还是必须 搬运DexCode结构。<br>1.registersSize 字段制定了方法中使用的寄存器个数，就是Smali语法里的.register 指令的值<br>2.Insize字段指定了方法的参数个数  对应.paramter 指令<br>3.outsSzie调用外部方法的时候使用的寄存器个数<br>4.triesSize 指定方法中Try/Catch作用</p>
+<p>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————<br>想想最后仍然需要各种结构体组合起来看才能真正发挥作用。</p>
 
       
     </div>
@@ -259,7 +261,7 @@
         <p><span>本文标题:</span><a href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年09月30日 - 23时56分</p>
-        <p><span>最后更新:</span>2016年10月01日 - 01时30分</p>
+        <p><span>最后更新:</span>2016年10月02日 - 01时00分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/09/30/Android可执行文件/" title="Android程序生成与Dex结构相关（简略）">http://yoursite.com/2016/09/30/Android可执行文件/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/09/30/Android可执行文件/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -274,6 +276,15 @@
 
 
 <nav id="article-nav">
+  
+    <a href="/2016/10/02/静态1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          静态分析Android程序 (1)
+        
+      </div>
+    </a>
   
   
     <a href="/2016/09/29/不明真相的Dalvik语法/" id="article-nav-older" class="article-nav-link-wrap">
@@ -359,7 +370,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/10/02/静态1/" title="上一篇: 静态分析Android程序 (1)">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -368,7 +381,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/Android基础/">安卓基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/17/Android基础/">安卓基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
