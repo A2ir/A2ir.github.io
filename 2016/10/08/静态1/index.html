@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="article">
 <meta property="og:title" content="静态分析Android程序 (1)">
-<meta property="og:url" content="http://yoursite.com/2016/10/02/静态1/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/10/08/静态1/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-10-02T10:41:27.754Z">
+<meta property="og:updated_time" content="2016-10-09T07:01:40.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="静态分析Android程序 (1)">
   
@@ -194,8 +194,8 @@
       <div class="body-wrap"><article id="post-静态1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/02/静态1/" class="article-date">
-      <time datetime="2016-10-01T16:10:26.131Z" itemprop="datePublished">2016-10-02</time>
+      <a href="/2016/10/08/静态1/" class="article-date">
+      <time datetime="2016-10-08T07:27:00.000Z" itemprop="datePublished">2016-10-08</time>
 </a>
     </div>
   
@@ -217,7 +217,7 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/安卓/">安卓</a><a class="article-category-link" href="/categories/安卓/Dex/">Dex</a>
+    <a class="article-category-link" href="/categories/安卓/">安卓</a><a class="article-category-link" href="/categories/安卓/基础/">基础</a>
     </div>
 
 
@@ -241,10 +241,10 @@
 <p>和Windows不一样（至少我目前是这样觉得）<br>我们知道安卓分为四大组件，<br>activity、service、content provider、broadcast receiver。<br>一个Andriod程序由一个或者多个activity以及其他组件组成，每个activity都是同级别的。<br>在程序中使用activity都需要在AndriodMainifest.xml文件中手动声明，声明activity要用activity标签。<br>一般认为在AndriodMainifest.xml中寻找主activity</p>
 <p>Application类，需要知道的是  这个类比其他类启动的早，一些未授权的代码一般都在这个类中。</p>
 <p>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————<br>接下来 Smali 文件格式<br>前三行描述了当前类的一些信息<br>.class  当前类<br>.super  父类名<br>.source  当前类的源文件名</p>
-<p>.filed指令  字段的声明  字段有静态和实例字段两种<br>.filed&lt;访问权限&gt;(static)&lt;修饰关键字&gt;&lt;字段名&gt;&lt;字段类型&gt;</p>
-<p>.method<br>.method&lt;访问权限&gt;&lt;修饰关键字&gt;&lt;方法原型&gt;<br>&lt;.local&gt;  指定了使用的局部变量的个数<br>&lt;.paramter&gt;  指定了方法的参数<br>&lt;.prologue&gt;  指定了代码的开始处<br>&lt;.line&gt;  指定了该代码在源代码中的行号<br>&lt;代码体&gt;<br>.end method</p>
-<p>.interface&lt;接口名&gt;</p>
-<p>.annotations[注解属性]&lt;注解类名&gt;<br>[注解字段=值]<br>.end annotations<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————</p>
+<p>#instance filed<br>.filed指令  字段的声明  字段有静态和实例字段两种<br>.filed&lt;访问权限&gt;(static)&lt;修饰关键字&gt;&lt;字段名&gt;&lt;字段类型&gt;</p>
+<p>#direct methods<br>.method<br>.method&lt;访问权限&gt;&lt;修饰关键字&gt;&lt;方法原型&gt;<br>&lt;.local&gt;  指定了使用的局部变量的个数<br>&lt;.paramter&gt;  指定了方法的参数<br>&lt;.prologue&gt;  指定了代码的开始处<br>&lt;.line&gt;  指定了该代码在源代码中的行号<br>&lt;代码体&gt;<br>.end method</p>
+<p>#interface<br>.interface&lt;接口名&gt;</p>
+<p>#annotations<br>.annotations[注解属性]&lt;注解类名&gt;<br>[注解字段=值]<br>.end annotations<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————</p>
 
       
     </div>
@@ -253,13 +253,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/02/静态1/">静态分析Android程序 (1)</a></p>
+        <p><span>本文标题:</span><a href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
-        <p><span>发布时间:</span>2016年10月02日 - 00时10分</p>
-        <p><span>最后更新:</span>2016年10月02日 - 18时41分</p>
+        <p><span>发布时间:</span>2016年10月08日 - 15时27分</p>
+        <p><span>最后更新:</span>2016年10月09日 - 15时01分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/02/静态1/" title="静态分析Android程序 (1)">http://yoursite.com/2016/10/02/静态1/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/02/静态1/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/08/静态1/" title="静态分析Android程序 (1)">http://yoursite.com/2016/10/08/静态1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/08/静态1/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -272,18 +272,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2016/10/02/SEH查看/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/10/08/静态3/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          SEH查看相关
+          静态分析Android程序 (3)
         
       </div>
     </a>
   
   
-    <a href="/2016/09/30/Android可执行文件/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android程序生成与Dex结构相关（简略）</div>
+    <a href="/2016/10/07/匿名内部类/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">简略的匿名内部类</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -342,7 +342,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/10/02/静态1/" data-title="静态分析Android程序 (1)" data-url="http://yoursite.com/2016/10/02/静态1/"></div>
+    <div class="ds-thread" data-thread-key="2016/10/08/静态1/" data-title="静态分析Android程序 (1)" data-url="http://yoursite.com/2016/10/08/静态1/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -365,18 +365,18 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/10/02/SEH查看/" title="上一篇: SEH查看相关">
+            <a href="/2016/10/08/静态3/" title="上一篇: 静态分析Android程序 (3)">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/09/30/Android可执行文件/" title="下一篇: Android程序生成与Dex结构相关（简略）">
+            <a href="/2016/10/07/匿名内部类/" title="下一篇: 简略的匿名内部类">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

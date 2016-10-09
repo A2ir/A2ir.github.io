@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>SEH查看相关 | Shurima</title>
+  <title>静态分析Android程序 (2) | Shurima</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="article">
-<meta property="og:title" content="SEH查看相关">
-<meta property="og:url" content="http://yoursite.com/2016/10/02/SEH查看/index.html">
+<meta property="og:title" content="静态分析Android程序 (2)">
+<meta property="og:url" content="http://yoursite.com/2016/10/07/静态2/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-10-02T14:55:23.337Z">
+<meta property="og:updated_time" content="2016-10-08T11:15:35.488Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SEH查看相关">
+<meta name="twitter:title" content="静态分析Android程序 (2)">
   
     <link rel="alternative" href="/atom.xml" title="Shurima" type="application/atom+xml">
   
@@ -191,11 +191,11 @@
         </header>                
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-SEH查看" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-静态2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/02/SEH查看/" class="article-date">
-      <time datetime="2016-10-02T14:55:23.332Z" itemprop="datePublished">2016-10-02</time>
+      <a href="/2016/10/07/静态2/" class="article-date">
+      <time datetime="2016-10-07T14:46:03.488Z" itemprop="datePublished">2016-10-07</time>
 </a>
     </div>
   
@@ -208,7 +208,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SEH查看相关
+      静态分析Android程序 (2)
     </h1>
   
 
@@ -217,13 +217,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/Win/">Win</a><a class="article-category-link" href="/categories/Win/Windbg/">Windbg</a>
+    <a class="article-category-link" href="/categories/安卓/">安卓</a><a class="article-category-link" href="/categories/安卓/内部类/">内部类</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞/">漏洞</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新/">萌新</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新/">萌新</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -235,19 +235,17 @@
           
         <ul>
 <li><a id="more"></a>
-</li>
+主要还是说一下Android软件中的类。<br>众所周知，Android程序开发中大量使用了监视器。，<br>如Button的点击事件响应的OnclickListener、长按事件OnLongClickListener、ListView<br>但是由于监听器只能临时使用一次<br>所以多采用匿名内部类的形式来实现。<br>如下面的按钮点击事件响应代码<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————</li>
 </ul>
-<p>简单的写（搬运）一下SEH相关。<br>结构化异常处理，按照我的理解，是一连串由单链表串起来在栈中分配的，这就有了利用SEH完成溢出的可能。</p>
-<p>异常处理链的头指针保存在TEB(线程环境块)的起始位置,所以想添加一个新的异常处理程序的话,新的结点应该添加到异常处理链的头部,同时TEB中保存的指针也应该指向这个新的结点.<br>异常处理链中结点的类型都是_EXCEPTION_REGISTRATION_RECORD,结点中保存了异常处理函数的地址和指向下一个结点的指针.奇怪的是,最后一个结点的指向下一个结点的指针并不为空,而是0xffffffff.该结构定义如下:<br>使用WinDgb查看_EXCEPTION_REGISTRATION_RECORD<br>发现一个由Header 和Next构成　其中Header占用4个字节。<br>X86汇编语言如下</p>
-<p>mov eax,dword ptr fs:[00000000h]  ;获取异常处理链的头结点指针</p>
-<p>push eax                             ;保存异常处理链旧的头结点指针</p>
-<p>lea eax,[ebp-10h]</p>
-<p>mov dword ptr fs:[00000000h],eax  ;设置新的头结点指针</p>
-<p>mov ecx,dword ptr [ebp-10h]        ;获取旧的头结点指针(当前头结点的NEXT域)</p>
-<p>mov dword ptr fs:[00000000h],ecx  ;恢复旧的头结点指针<br>（代码高亮怎么搞= =？）</p>
-<p>编译器通常会注册一个全局的句柄,通过这个全局句柄可以得知程序的那些区域被执行了,并且可以相应的处理.<br>每一个线程的TEB都不相同,操作系统会确保段选择子fs一直都指向TEB的.可以通过fs:[18h]来获取TEB的地址,这里面保存着TEB的自指针(PS:指向自己的指针).</p>
-<p>一定要记得fs是一直指向的，可以通过查看fs来验证。</p>
-<p>除此之外，还可以通过?poi(fs:[18h])<br>来验证<br>查看整个_EXCEPTION_REGISTRATION_RECORD结构，可以再用<br>！slist命令来看</p>
+<p>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————<br>btn.setClickListener(new Android.view.View.OnclickListener)        //这个代码的是Android对Button的三种实现方式的一种<br>{<br>public void OnClick(View v){</p>
+<p>}<br>});</p>
+<p>public interface OnclickListener{<br>void OnClick(View v)<br>}</p>
+<p>分析一下，在MainActivity.smali中 可以看到<br>new-instance  //创建一个实例<br>invoke-direct //初始化实例<br>invoke-virtual //设置按钮事件监听器<br>Tip: invoke-<em>**</em>表示调用什么类型的函数，后面还有一堆参数</p>
+<p>书上最后居然写了一句不必关心注解和监听器是什么鬼啦<br>黑人问号.jpg</p>
+<p>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————<br>注解类<br>注解是Java的语言特性，在Android的开发过程中也得到了广泛的使用<br>Android系统中涉及到注解的包共两个 一个是Dalvik.annotations ，该程序包吓得注解不对外开放，仅供和辛苦与代码测试使用，所有的注解声明位于Android系统源码的libcore\Dalvik\src\main\java\Dalvik\annotations 目录下<br>另一个是Android.annotations 解声明位于Android系统源码的frameworks\base\core\java\Android\annotations</p>
+<p>下面详细来看一下<br>MemberClasses  即是子类成员的集合，通俗来讲就是一个内部类的列表<br>EnclosingClass 注解表名MainActivity的作用范围<br>需要注意的是accessFlags 是一个标志位，标明它的属性</p>
+<p>另外还有signature 与Throws注解。前者用于验证方法的签名，<br>如果有抛出异常，则会有Throws注解。<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————<br>自动生成的类<br>看起来就是一堆资源文件。</p>
+<p>接下来就是阅读反编译的smali代码了</p>
 
       
     </div>
@@ -256,13 +254,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/02/SEH查看/">SEH查看相关</a></p>
+        <p><span>本文标题:</span><a href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
-        <p><span>发布时间:</span>2016年10月02日 - 22时55分</p>
-        <p><span>最后更新:</span>2016年10月02日 - 22时55分</p>
+        <p><span>发布时间:</span>2016年10月07日 - 22时46分</p>
+        <p><span>最后更新:</span>2016年10月08日 - 19时15分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/02/SEH查看/" title="SEH查看相关">http://yoursite.com/2016/10/02/SEH查看/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/02/SEH查看/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/07/静态2/" title="静态分析Android程序 (2)">http://yoursite.com/2016/10/07/静态2/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/07/静态2/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
@@ -275,18 +273,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2016/10/07/静态2/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/10/07/匿名内部类/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          静态分析Android程序 (2)
+          简略的匿名内部类
         
       </div>
     </a>
   
   
-    <a href="/2016/09/30/Android可执行文件/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Android程序生成与Dex结构相关（简略）</div>
+    <a href="/2016/10/02/SEH查看/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SEH查看相关</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -345,7 +343,7 @@
     
       <div class="duoshuo" id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="2016/10/02/SEH查看/" data-title="SEH查看相关" data-url="http://yoursite.com/2016/10/02/SEH查看/"></div>
+    <div class="ds-thread" data-thread-key="2016/10/07/静态2/" data-title="静态分析Android程序 (2)" data-url="http://yoursite.com/2016/10/07/静态2/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -368,13 +366,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/10/07/静态2/" title="上一篇: 静态分析Android程序 (2)">
+            <a href="/2016/10/07/匿名内部类/" title="上一篇: 简略的匿名内部类">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2016/09/30/Android可执行文件/" title="下一篇: Android程序生成与Dex结构相关（简略）">
+            <a href="/2016/10/02/SEH查看/" title="下一篇: SEH查看相关">
                 <i class="fa fa-angle-right"></i>
             </a>
         
