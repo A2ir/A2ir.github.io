@@ -9,7 +9,7 @@
 <meta property="og:title" content="ARM初步">
 <meta property="og:url" content="http://yoursite.com/2016/10/09/ARM/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-10-09T09:54:48.196Z">
+<meta property="og:updated_time" content="2016-10-19T06:32:15.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ARM初步">
   
@@ -235,13 +235,45 @@
           
         <ul>
 <li><a id="more"></a>
-#看着这些汇编代码，和X86的汇编代码有些类似之处。<br>还是来从结构开始吧。</li>
+<h1 id="看着这些汇编代码，和X86的汇编代码有些类似之处。"><a href="#看着这些汇编代码，和X86的汇编代码有些类似之处。" class="headerlink" title="看着这些汇编代码，和X86的汇编代码有些类似之处。"></a>看着这些汇编代码，和X86的汇编代码有些类似之处。</h1></li>
 </ul>
+<p>还是来从结构开始吧。</p>
 <p>一个完整的ARM汇编程序包括处理器框架定义、数据段、代码段、与main函数。<br>分开来看</p>
-<p>处理器框架定义<br>.arch指定了ARM处理器框架<br>.fpu指定了协处理的类型<br>.eabi_attribute注定了一些接口属性</p>
-<p>段定义<br>ARM汇编使用.section指令来定义段，格式为<br>.section name[,”flags”[,%type[,flag_specific_arguments]]]<br>name为段名，flags为段的属性，如读写可执行等，type指定了段的类型  flag_specific_arguments指定了一些平台的参数</p>
+<p>处理器框架定义<br>.arch指定了ARM处理器框架</p>
+<p>.fpu指定了协处理的类型</p>
+<p>.eabi_attribute注定了一些接口属性</p>
+<p>段定义</p>
+<p>ARM汇编使用.section指令来定义段，格式为</p>
+<p>.section name[,”flags”[,%type[,flag_specific_arguments]]]</p>
+<p>name为段名，flags为段的属性，如读写可执行等，type指定了段的类型</p>
+<p> flag_specific_arguments指定了一些平台的参数</p>
 <p>此外还有注释于标号，汇编器指令，就不列举了。</p>
-<p>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————‘<br>寄存器寻址，和X86汇编很像，就不列举了。<br>各种指令集也很麻烦，依然省略。<br>—————————————————————————————————————————————————————我是分割线———————————————————————————————————————————————————————————————————‘</p>
+<hr>
+<p>ARM处理器寻址方式</p>
+<p><em>1.</em>立即寻址</p>
+<p>MOV R0, #1234</p>
+<p><em>2.</em>寄存器寻址</p>
+<p>执行后RO=1234。立即数以#作为前缀</p>
+<p>MOV R0,R1</p>
+<p><em>3.</em>寄存器移位寻址</p>
+<p>LSL：逻辑左移</p>
+<p>LSR：逻辑右移</p>
+<p>ASR:算术右移，移动过程中符号位保持不变</p>
+<p>ROR：循环右移</p>
+<p>RRX：带扩展的循环右移</p>
+<p><em>4.</em>寄存器间接寻址</p>
+<p>寄存器间接寻址中地址码的寄存器是操作数的指针</p>
+<p>LDR R0， [R1]</p>
+<p>指令的功能是将R1寄存器的数值作为地址，去除此地址中的值赋给R0寄存器</p>
+<p><em>5.</em>基址寻址</p>
+<p>基址寻址多用于查表、数组访问等操作</p>
+<p>LDR 40 [R1，#-4]</p>
+<p>指令功能是将R1寄存器的数值减4作为地址，取出此地址的值赋给R0寄存器。</p>
+<p><em>6.</em>多寄存器寻址</p>
+<p>最多可以完成16个通用寄存器的传送</p>
+<p>LDMIA R0，{R1，R2，R3，R4}</p>
+<p><strong>LDM</strong>是数据加载指令，后缀的IA表示吗，每次执行完加载操作后R0寄存器的值+1个字，在ARM指令集中，字表示的是一个32位的数值。这条指令执行后R1=[R0]，R2=[R0+#4]，R3=[R0+#8],R4=[R0+#12].</p>
+<p>前面说#表示16进制，一个十六进制数需要8位二进制来表示，这就是为什么+#4的原因</p>
 
       
     </div>
@@ -253,7 +285,7 @@
         <p><span>本文标题:</span><a href="/2016/10/09/ARM/">ARM初步</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年10月09日 - 17时54分</p>
-        <p><span>最后更新:</span>2016年10月09日 - 17时54分</p>
+        <p><span>最后更新:</span>2016年10月19日 - 14时32分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/09/ARM/" title="ARM初步">http://yoursite.com/2016/10/09/ARM/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/09/ARM/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -282,7 +314,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#看着这些汇编代码，和X86的汇编代码有些类似之处。"><span class="toc-number">1.</span> <span class="toc-text">看着这些汇编代码，和X86的汇编代码有些类似之处。</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
