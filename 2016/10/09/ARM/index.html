@@ -9,7 +9,7 @@
 <meta property="og:title" content="ARM初步">
 <meta property="og:url" content="http://yoursite.com/2016/10/09/ARM/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-10-19T06:32:15.040Z">
+<meta property="og:updated_time" content="2016-10-20T06:56:59.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ARM初步">
   
@@ -127,7 +127,7 @@
 		
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
+                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
                     </div>
                 </section>
                 
@@ -217,13 +217,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/安卓/">安卓</a><a class="article-category-link" href="/categories/安卓/控制语句/">控制语句</a>
+    <a class="article-category-link" href="/categories/安智/">安智</a><a class="article-category-link" href="/categories/安智/控制语句/">控制语句</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新/">萌新</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习笔记/">学习笔记</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新/">萌新</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -274,6 +274,23 @@
 <p>LDMIA R0，{R1，R2，R3，R4}</p>
 <p><strong>LDM</strong>是数据加载指令，后缀的IA表示吗，每次执行完加载操作后R0寄存器的值+1个字，在ARM指令集中，字表示的是一个32位的数值。这条指令执行后R1=[R0]，R2=[R0+#4]，R3=[R0+#8],R4=[R0+#12].</p>
 <p>前面说#表示16进制，一个十六进制数需要8位二进制来表示，这就是为什么+#4的原因</p>
+<p><em>7.</em>堆栈寻址</p>
+<p>堆栈寻址是ARM处理器特有的一种寻址方式，堆栈寻址需要特定的指令来完成。<br>多采用LDM/STM前缀，FA、EA、FD、ED为后缀</p>
+<p>STMFD SP!, {R1-R7, LR}   @将R1~R7，LR入栈。</p>
+<p>LMDFD SP!, {R1-R7, LR}   @将数据入栈，放入R1~R7，LR寄存器。</p>
+<p><em>8.</em>块拷贝寻址</p>
+<p>块拷贝寻址可实现连续地址数据从存储器的某一个位置拷贝到另一位置</p>
+<p>同样采用多寄存器</p>
+<p>LDMIA R0! , {R1-R3}  @从R0寄存器只想的存储单元中读取3个字到R1-R3寄存器</p>
+<p>STMIA R0! , {R1-R3}  @存储R1-R3寄存器的内容到R0寄存器指向的存储单元</p>
+<p><em>9.</em>相对寻址</p>
+<p>相对于程序计数器PC的当前值为基地址</p>
+<p>BL NEXT</p>
+<p>…</p>
+<p>NEXT：</p>
+<p>…</p>
+<hr>
+<p>剩下的还有很多ARM汇编指令就不列举啦</p>
 
       
     </div>
@@ -285,7 +302,7 @@
         <p><span>本文标题:</span><a href="/2016/10/09/ARM/">ARM初步</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年10月09日 - 17时54分</p>
-        <p><span>最后更新:</span>2016年10月19日 - 14时32分</p>
+        <p><span>最后更新:</span>2016年10月20日 - 14时56分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/09/ARM/" title="ARM初步">http://yoursite.com/2016/10/09/ARM/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/09/ARM/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -300,6 +317,15 @@
 
 
 <nav id="article-nav">
+  
+    <a href="/2016/10/23/NDK/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
     <a href="/2016/10/08/静态3/" id="article-nav-older" class="article-nav-link-wrap">
@@ -385,7 +411,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2016/10/23/NDK/" title="上一篇: ">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
@@ -394,7 +422,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/第一节/">第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/堆/">堆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/动态2/">动态2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/02/动态1/">动态1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/23/NDK/">NDK</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

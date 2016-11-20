@@ -9,7 +9,7 @@
 <meta property="og:title" content="SEH查看相关">
 <meta property="og:url" content="http://yoursite.com/2016/10/02/SEH查看/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-10-02T14:55:23.337Z">
+<meta property="og:updated_time" content="2016-11-03T12:07:05.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SEH查看相关">
   
@@ -127,7 +127,7 @@
 		
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
+                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
                     </div>
                 </section>
                 
@@ -237,17 +237,20 @@
 <li><a id="more"></a>
 </li>
 </ul>
-<p>简单的写（搬运）一下SEH相关。<br>结构化异常处理，按照我的理解，是一连串由单链表串起来在栈中分配的，这就有了利用SEH完成溢出的可能。</p>
-<p>异常处理链的头指针保存在TEB(线程环境块)的起始位置,所以想添加一个新的异常处理程序的话,新的结点应该添加到异常处理链的头部,同时TEB中保存的指针也应该指向这个新的结点.<br>异常处理链中结点的类型都是_EXCEPTION_REGISTRATION_RECORD,结点中保存了异常处理函数的地址和指向下一个结点的指针.奇怪的是,最后一个结点的指向下一个结点的指针并不为空,而是0xffffffff.该结构定义如下:<br>使用WinDgb查看_EXCEPTION_REGISTRATION_RECORD<br>发现一个由Header 和Next构成　其中Header占用4个字节。<br>X86汇编语言如下</p>
-<p>mov eax,dword ptr fs:[00000000h]  ;获取异常处理链的头结点指针</p>
-<p>push eax                             ;保存异常处理链旧的头结点指针</p>
-<p>lea eax,[ebp-10h]</p>
-<p>mov dword ptr fs:[00000000h],eax  ;设置新的头结点指针</p>
-<p>mov ecx,dword ptr [ebp-10h]        ;获取旧的头结点指针(当前头结点的NEXT域)</p>
-<p>mov dword ptr fs:[00000000h],ecx  ;恢复旧的头结点指针<br>（代码高亮怎么搞= =？）</p>
-<p>编译器通常会注册一个全局的句柄,通过这个全局句柄可以得知程序的那些区域被执行了,并且可以相应的处理.<br>每一个线程的TEB都不相同,操作系统会确保段选择子fs一直都指向TEB的.可以通过fs:[18h]来获取TEB的地址,这里面保存着TEB的自指针(PS:指向自己的指针).</p>
+<p>简单的写（搬运）一下SEH相关。</p>
+<p>结构化异常处理，按照我的理解，是一连串由单链表串起来在栈中分配的，这就有了利用SEH完成溢出的可能。</p>
+<p>异常处理链的头指针保存在TEB(线程环境块)的起始位置,所以想添加一个新的异常处理程序的话,新的结点应该添加到异常处理链的头部,同时TEB中保存的指针也应该指向这个新的结点.</p>
+<p>异常处理链中结点的类型都是_EXCEPTION_REGISTRATION_RECORD,结点中保存了异常处理函数的地址和指向下一个结点的指针.奇怪的是,最后一个结点的指向下一个结点的指针并不为空,而是0xffffffff.该结构定义如下:</p>
+<p>使用WinDgb查看_EXCEPTION_REGISTRATION_RECORD</p>
+<p>发现一个由Header 和Next构成　其中Header占用4个字节。</p>
+<p>X86汇编语言如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mov eax,dword ptr fs:[00000000h]  ;获取异常处理链的头结点指针</div><div class="line"></div><div class="line">push eax                             ;保存异常处理链旧的头结点指针</div><div class="line"></div><div class="line">lea eax,[ebp-10h]</div><div class="line"></div><div class="line">mov dword ptr fs:[00000000h],eax  ;设置新的头结点指针</div><div class="line"></div><div class="line">mov ecx,dword ptr [ebp-10h]        ;获取旧的头结点指针(当前头结点的NEXT域)</div><div class="line"></div><div class="line">mov dword ptr fs:[00000000h],ecx  ;恢复旧的头结点指针</div></pre></td></tr></table></figure></p>
+<p>编译器通常会注册一个全局的句柄,通过这个全局句柄可以得知程序的那些区域被执行了,并且可以相应的处理.</p>
+<p>每一个线程的TEB都不相同,操作系统会确保段选择子fs一直都指向TEB的.可以通过fs:[18h]来获取TEB的地址,这里面保存着TEB的自指针(PS:指向自己的指针).</p>
 <p>一定要记得fs是一直指向的，可以通过查看fs来验证。</p>
-<p>除此之外，还可以通过?poi(fs:[18h])<br>来验证<br>查看整个_EXCEPTION_REGISTRATION_RECORD结构，可以再用<br>！slist命令来看</p>
+<p>除此之外，还可以通过?poi(fs:[18h])</p>
+<p>来验证</p>
+<p>查看整个_EXCEPTION_REGISTRATION_RECORD结构，可以再用</p>
+<p>！slist命令来看</p>
 
       
     </div>
@@ -259,7 +262,7 @@
         <p><span>本文标题:</span><a href="/2016/10/02/SEH查看/">SEH查看相关</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年10月02日 - 22时55分</p>
-        <p><span>最后更新:</span>2016年10月02日 - 22时55分</p>
+        <p><span>最后更新:</span>2016年11月03日 - 20时07分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/02/SEH查看/" title="SEH查看相关">http://yoursite.com/2016/10/02/SEH查看/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/02/SEH查看/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -379,7 +382,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/第一节/">第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/堆/">堆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/动态2/">动态2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/02/动态1/">动态1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/23/NDK/">NDK</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");

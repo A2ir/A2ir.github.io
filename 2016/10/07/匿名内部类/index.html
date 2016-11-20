@@ -9,7 +9,7 @@
 <meta property="og:title" content="简略的匿名内部类">
 <meta property="og:url" content="http://yoursite.com/2016/10/07/匿名内部类/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-10-07T15:20:12.506Z">
+<meta property="og:updated_time" content="2016-11-03T06:23:28.257Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简略的匿名内部类">
   
@@ -127,7 +127,7 @@
 		
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
+                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
                     </div>
                 </section>
                 
@@ -241,11 +241,10 @@
 <p>匿名内部类也就是没有名字的内部类</p>
 <p>正因为没有名字，所以匿名内部类只能使用一次，它通常用来简化代码编写</p>
 <p>但使用匿名内部类还有个前提条件：必须继承一个父类或实现一个接口</p>
-<p>来一个小小的例子</p>
-<p>abstract class Person {//抽象类<br>    public abstract void eat();//抽象方法<br>}<br>class Son extends Person<br>public void eat()<br>{<br>  System.out.println(“Eat Something”)<br>}<br>public class test{<br>public void public static void main(String[] args) {<br>Person p = new Son();<br>p.eat();<br>}<br>}</p>
+<p>来一个小小的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">abstract class Person &#123;//抽象类</div><div class="line">    public abstract void eat();//抽象方法</div><div class="line">&#125;</div><div class="line">class Son extends Person</div><div class="line">public void eat()</div><div class="line">&#123;</div><div class="line">  System.out.println(&quot;Eat Something&quot;)</div><div class="line">&#125;</div><div class="line">public class test&#123;</div><div class="line">public void public static void main(String[] args) &#123;</div><div class="line">Person p = new Son();</div><div class="line">p.eat();</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>这个例子的运行结构是Eat Something 周所周知~<br>很平凡的Java 代码。</p>
-<p>那么来一个内部匿名类的例子<br>abstract class Person{<br>  public abstract void eat();<br>}</p>
-<p>public class test{<br>{<br>  public static void main(String[] args) {<br>    Person p= new Person(){<br>public void eat(){<br>    System.out.println(“Eat Something”);<br>      }<br>    };<br>    p.eat();<br>  }<br>}<br>}<br>运行结果为Eat Something<br>这样就可以省略一个类的书写</p>
+<p>那么来一个内部匿名类的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">abstract class Person&#123;</div><div class="line">  public abstract void eat();</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class test&#123;</div><div class="line">&#123;</div><div class="line">  public static void main(String[] args) &#123;</div><div class="line">    Person p= new Person()&#123;</div><div class="line">public void eat()&#123;</div><div class="line">    System.out.println(&quot;Eat Something&quot;);</div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">    p.eat();</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果为Eat Something<br>这样就可以省略一个类的书写</p>
 <p>此外，还可以在接口上、Thread类、Runable中实现内部类<br>具体请参考下方链接中的内容~<br>感谢来自这位博主的技术支援~<br><a href="http://www.cnblogs.com/nerxious/archive/2013/01/25/2876489.html" target="_blank" rel="external">http://www.cnblogs.com/nerxious/archive/2013/01/25/2876489.html</a></p>
 
       
@@ -258,7 +257,7 @@
         <p><span>本文标题:</span><a href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年10月07日 - 23时20分</p>
-        <p><span>最后更新:</span>2016年10月07日 - 23时20分</p>
+        <p><span>最后更新:</span>2016年11月03日 - 14时23分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/07/匿名内部类/" title="简略的匿名内部类">http://yoursite.com/2016/10/07/匿名内部类/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/10/07/匿名内部类/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -378,7 +377,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/第一节/">第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/堆/">堆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/动态2/">动态2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/02/动态1/">动态1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/23/NDK/">NDK</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
