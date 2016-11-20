@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>格式化串漏洞基础 | Shurima</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="格式化串漏洞基础">
+<meta property="og:url" content="http://yoursite.com/2016/11/20/格式化漏洞原理/index.html">
+<meta property="og:site_name" content="Shurima">
+<meta property="og:image" content="http://yoursite.com/img/1.png">
+<meta property="og:image" content="http://yoursite.com/img/2.png">
+<meta property="og:image" content="http://yoursite.com/img/3.png">
+<meta property="og:image" content="http://yoursite.com/img/4.png">
+<meta property="og:image" content="http://yoursite.com/img/5.png">
+<meta property="og:image" content="http://yoursite.com/img/6.png">
+<meta property="og:image" content="http://yoursite.com/img/7.png">
+<meta property="og:image" content="http://yoursite.com/img/8.png">
+<meta property="og:image" content="http://yoursite.com/img/9.png">
+<meta property="og:image" content="http://yoursite.com/img/10.png">
+<meta property="og:image" content="http://yoursite.com/img/11.png">
+<meta property="og:image" content="http://yoursite.com/img/12.png">
+<meta property="og:image" content="http://yoursite.com/img/13.png">
+<meta property="og:image" content="http://yoursite.com/img/14.png">
+<meta property="og:image" content="http://yoursite.com/img/15.png">
+<meta property="og:image" content="http://yoursite.com/img/16.png">
+<meta property="og:image" content="http://yoursite.com/img/17.png">
+<meta property="og:image" content="http://yoursite.com/img/18.png">
+<meta property="og:image" content="http://yoursite.com/img/19.png">
+<meta property="og:image" content="http://yoursite.com/img/20.png">
+<meta property="og:image" content="http://yoursite.com/img/21.png">
+<meta property="og:updated_time" content="2016-11-20T07:21:25.078Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="格式化串漏洞基础">
+<meta name="twitter:image" content="http://yoursite.com/img/1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Shurima" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/1457590626974.jpeg">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/IMG_20160907_000252.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/">A2ir</a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/categories/安卓/index.html">categories</a></li>
+                        
+                            <li><a href="/tags/index.html">TAGs</a></li>
+                        
+                            <li><a href="/">Something For Love</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="https://mail.qq.com/cgi-bin/frame_html?sid=r9poTMkpcqRqXWA3&r=ad0e4eb202b1fa5b151242f84891687d" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/A2ir" title="github">github</a>
+                            
+                                <a class="fl zhihu" target="_blank" href="https://www.zhihu.com/people/hen-you-zhi-de-qing-nian" title="zhihu">zhihu</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+
+		
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/杂七杂八/" style="font-size: 13.33px;">杂七杂八</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/萌新向/" style="font-size: 13.33px;">萌新向</a> <a href="/tags/逆向/" style="font-size: 16.67px;">逆向</a>
+                    </div>
+                </section>
+                
+
+                
+
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">一只想要三开的脆</div>
+                </section>
+                
+            </div>
+        </div>
+      <audio src='http://link.hhtjim.com/163/428350141.mp3' loop="loop" autoplay="autoplay" ></audio>
+      </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">A2ir</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/IMG_20160907_000252.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">A2ir</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/categories/安卓/index.html">categories</a></li>
+                
+                    <li><a href="/tags/index.html">TAGs</a></li>
+                
+                    <li><a href="/">Something For Love</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="https://mail.qq.com/cgi-bin/frame_html?sid=r9poTMkpcqRqXWA3&r=ad0e4eb202b1fa5b151242f84891687d" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/A2ir" title="github">github</a>
+                    
+                        <a class="zhihu" target="_blank" href="https://www.zhihu.com/people/hen-you-zhi-de-qing-nian" title="zhihu">zhihu</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-格式化漏洞原理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/11/20/格式化漏洞原理/" class="article-date">
+      <time datetime="2016-11-20T13:39:38.936Z" itemprop="datePublished">2016-11-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      格式化串漏洞基础
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/win/">win</a><a class="article-category-link" href="/categories/win/漏洞/">漏洞</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂七杂八/">杂七杂八</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新向/">萌新向</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <ul>
+<li><a id="more"></a>
+</li>
+</ul>
+<p>#格式化串漏洞原理与利用</p>
+<p>##实验目的</p>
+<ul>
+<li>了解格式化串漏洞产生的原理</li>
+<li>掌握格式化串漏洞分析与利用</li>
+</ul>
+<p>##实验环境</p>
+<ul>
+<li>实验环境<ul>
+<li>操作机<code>Windows7</code></li>
+<li>OllyDbg</li>
+<li>Visual Studio 6.0</li>
+</ul>
+</li>
+</ul>
+<p>##实验内容</p>
+<p>本实验中，我将带领大家编写几个具有格式化串漏洞的可执行程序，然后使用OllyDbg调试工具对程序进行动态调试，定位漏洞触发点，最后进行简单的漏洞利用。</p>
+<p>###PART 1 了解格式化串漏洞产生的原理</p>
+<blockquote>
+<p><strong>认识格式化串</strong></p>
+<p>所谓格式化串，就是在*printf()系列函数中按照一定的格式对数据进行输出，可以输出<br>到标准输出，即printf()，也可以输出到文件句柄，字符串等，对应的函数有fprintf,sprintf,<br>snprintf,vprintf,vfprintf,vsprintf,vsnprintf等</p>
+</blockquote>
+<p>####步骤1：编写简单的测试程序</p>
+<blockquote>
+<p>本步骤使用Visual Studio编写示例程序</p>
+<p>格式化漏洞产生与数据输出函数中对输出格式解析的缺陷，我们以最熟悉的printf函数为例，其参数应该含有两部分：格式控制符和待输出的数据列表。</p>
+</blockquote>
+<p>新建一个文本文档，将其重命名为<code>formatstr.c</code>，右键 -&gt; 打开方式 -&gt; Microsoft (R) Developer Studio，用Visual Studio 6.0打开并编辑，写入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">int main(void)</div><div class="line">&#123;</div><div class="line">	int a=44,b=77;</div><div class="line">	printf(&quot;a=%d,b=%d\n&quot;,a,b);</div><div class="line">	printf(&quot;a=%d,b=%d\n&quot;);</div><div class="line">	return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于上述代码，第一个printf调用是正确的，第二个调用中则缺少了输出数据的变量列表。那么第二个调用将引起编译错误还是照常输出数据？如果输出数据又将是什么类型的数据呢？</p>
+<p>在菜单栏右键选择<code>Build</code>选项卡，然后将<code>Win32 Debug</code>修改成<code>Win32 Release</code>，然后依次点击 <code>Compile</code> -&gt; <code>Build</code> -&gt; <code>Execute</code>三个键，如下图所示来运行程序：<br><img src="/img/1.png" alt="1.png"></p>
+<p>第二次调用没有引起编译错误，程序正常执行。只是输出的数据有点出乎预料。我们这里使用OllyDbg调试一下。</p>
+<p>####步骤2：通过OllyDbg调试了解printf中的缺陷</p>
+<p>找出刚刚编译出的程序文件，位于<code>formatstr.c</code>同一目录的<code>Release</code>目录下，<code>formatstr.exe</code>。双击打开OllyDbg，在OllyDbg界面的左上角点击File -&gt; Open，然后找到<code>formatstr.exe</code>，选中后点击打开，界面会变成这样：<br><img src="/img/2.png" alt="2.png"></p>
+<p>在反汇编窗口中右键选择<code>转到</code>-&gt;<code>表达式</code>，弹出一个对话框，在文本框中输入<code>0x00401000</code>后，点击<code>确定</code>。此时我们来到了main函数代码入口。然后在地址<code>00401000</code>按<code>F2</code>下断点，接着按<code>F9</code>，此时OllyDbg就来到了main函数起始处。如下图所示:<br><img src="/img/3.png" alt="3.png"></p>
+<p>此时我们按三次<code>F8</code>来到<code>00401009</code>处，观察一下栈的变化，如下图所示：<br><img src="/img/4.png" alt="4.png"></p>
+<p>地址<code>00401000</code>到地址<code>00401004</code>这三行汇编代码是将参数压入栈内，实现函数传参的功能。我们在看一下栈内存。栈地址<code>0012FF40</code>存放着第一个参数：格式控制符，栈地址<code>0012FF44</code>和<code>0012FF48</code>存放着数据列表也既是第二、第三个参数，分别为44和77。</p>
+<p>此时我们在单步<code>F8</code>步过输出函数，控制台已经输出了字符串。如下图所示：<br><img src="/img/5.png" alt="5.png"></p>
+<p>这个时候我们在观察栈顶会发现，上一次调用过printf后，使用过的参数还在栈中分部着。此时我们再<code>F8</code>单步，同上次调用传参一样，地址<code>0040100E</code>处的汇编指令进行压栈传参。同时栈结构又发生改变。如下图所示：<br><img src="/img/6.png" alt="6.png"></p>
+<p>栈地址<code>0012FF3C</code>处存放格式化控制符，第一个参数；栈地址<code>0012FF40</code>和<code>0012FF44</code>出分别存放着数据列表也既是第二个、第三个参数，分别是：0x00407030、0x2C，由于格式化控制符中我们是用了<code>%d</code>，这代表以十进制数值显示。其实0x00407030就是十进制4223024。再单步<code>F8</code>看结果吧。如下图所示：<br><img src="/img/7.png" alt="7.png"></p>
+<p>到这里，应该明白第二个printf为什么会输出那样的数值了吧？！</p>
+<p>####实验结果分析与总结</p>
+<p>我们通过使用OllyDbg动态跟踪到两次调用printf函数的地方，观察了参数在栈上的分部情况，了解了第二次调用printf函数时，为什么会输出其他的数值。同时也了解格式控制符的缺陷。</p>
+<p>####思考</p>
+<p>1、我们能否控制printf的格式控制符进而输出其他的数值？如果能，又当如何？</p>
+<p>####题目<br>1、printf函数的参数个数是否是固定的？（）</p>
+<p>A 固定的</p>
+<p>B 不固定的</p>
+<p>C 有限个</p>
+<p>正确答案：B 解析：不是固定的，因为printf函数为多参数函数。</p>
+<p>2、printf函数中%d是哪种格式控制符？（）</p>
+<p>A 十六进制</p>
+<p>B 八进制</p>
+<p>C 十进制</p>
+<p>D 字符串</p>
+<p>正确答案：C 解析：C语言基础知识，%d为十进制格式控制符。</p>
+<p>3、本实验中，第二个printf打印出的第一个数值是？（）</p>
+<p>A  00407032</p>
+<p>B  00408030</p>
+<p>C  00407030</p>
+<p>D  00408032</p>
+<p>正确答案：C 解析：没啥好讲的，动手做实验可知。</p>
+<p>###PART2：用printf读取内存数据</p>
+<blockquote>
+<p>到此为止，这个问题还只是一个bug，算不上漏洞。但如果printf函数参数中的“格式控制符”可以被外界输入影响，那就是所谓的格式化串漏洞了。</p>
+</blockquote>
+<p>####步骤1：修改测试程序</p>
+<p>修改formatstr.c中的代码，如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">int main(int argc,cha** argv)</div><div class="line">&#123;</div><div class="line">   printf(argv[1]);</div><div class="line">   return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在菜单栏右键选择<code>Build</code>选项卡，然后将<code>Win32 Debug</code>修改成<code>Win32 Release</code>，然后依次点击 <code>Compile</code> -&gt; <code>Build</code>生成可执行文件后，此时点击任务栏最左边<code>开始</code>弹出管理面板后，在搜索栏中输入<code>cmd</code>然后回车，此时弹出了一个黑色的命令行窗口。然后通过<code>cd</code>命令切换到<code>Release</code>版本的<code>formatstr.exe</code>的目录下面，如下图：</p>
+<p><img src="/img/8.png" alt="8.png"></p>
+<p>当我们向程序传入普通字符串（如“ichunqiu”）时，将得到简单的反馈。但是如果传入的字符串中带有格式控制符时，printf就会打印出栈中“莫须有”的数据。例如，输入<code>%p,%p,%p......</code>，实际上可以读出栈中的数据，如下图所示：</p>
+<p><img src="/img/9.png" alt="9.png"></p>
+<p>####步骤2：通过OllyDbg调试知其然</p>
+<blockquote>
+<p>本节调试的程序由于需要向main传递参数，所以在使用OllyDbg打开可执行程序时，不要忘记设置参数！！！</p>
+</blockquote>
+<p>找出刚刚编译出的程序文件，位于<code>formatstr.c</code>同一目录的<code>Release</code>目录下，<code>formatstr.exe</code>。双击打开OllyDbg，在OllyDbg界面的左上角点击File -&gt; Open，然后找到<code>formatstr.exe</code>，选中后，然后在<code>参数：</code>文本框中输入<code>ichunqiu</code>，这就是向main函数传递参数。如下图所示：</p>
+<p><img src="/img/10.png" alt="10.png"></p>
+<p>然后再次点击<code>打开</code>，界面如下图：</p>
+<p><img src="/img/11.png" alt="11.png"></p>
+<p>在反汇编窗口中右键选择<code>转到</code>-&gt;<code>表达式</code>，弹出一个对话框，在文本框中输入<code>0x004010C5</code>后，点击<code>确定</code>。然后在地址<code>004010C5</code>按<code>F2</code>下断点，接着按<code>F9</code>，此时OllyDbg暂停下来。地址<code>004010C5</code>出对应的汇编<code>call dword ptr ds:[&lt;&amp;KERNEL32.GetCommandLineA&gt;]表达的是调用</code>GetCommandLineA<code>函数获取命令行。然后再单步</code>F8`，执行完函数后，将出现一串字符串。如下图所示：</p>
+<p><img src="/img/12.png" alt="12.png"></p>
+<p>这段字符串就是我们前面通命令行窗口执行的命令，其中<code>ichunqiu</code>为main函数的参数。接着在地址<code>00401100</code>处按<code>F2</code>下断点，然后按<code>F9</code>运行后，再单步<code>F7</code>步入来到main函数入口，如下图所示：</p>
+<p><img src="/img/13.png" alt="13.png"></p>
+<p>然后单步<code>F8</code>两次到达地址<code>00401007</code>处。该行汇编即将进行压栈传参，寄存器<code>ecx</code>中存放这字符串<code>ichunqiu</code>的地址。此时再一次单步<code>F8</code>执行到地址<code>00401008</code>，准备调用<code>printf</code>函数。如下图所示：</p>
+<p><img src="/img/14.png" alt="14.png"></p>
+<p>根据我们第一个PART的调试的经验可知。栈地址<code>0012FF48</code>中存放着第一个参数<code>ichunqiu</code>。在本次程序中我们并没有利用格式化串漏洞，因此这次只简单输出一个字符串。单步<code>F8</code>后，命令行窗口输出结果，如下图所示：</p>
+<p><img src="/img/15.png" alt="15.png"></p>
+<p>####步骤3：通过OllyDbg调试知其所以然</p>
+<blockquote>
+<p>根据步骤二的调试经验，让我们再次深入理解格式化串漏洞是如何利用的。</p>
+</blockquote>
+<p>还是找出刚刚编译出的程序文件，位于<code>formatstr.c</code>同一目录的<code>Release</code>目录下，<code>formatstr.exe</code>。双击打开OllyDbg，在OllyDbg界面的左上角点击File -&gt; Open，然后找到<code>formatstr.exe</code>，选中后，然后在<code>参数：</code>文本框中输入<code>%p,%p,%p,%p</code>，这就是向main函数传递参数。如下图所示：</p>
+<p><img src="/img/16.png" alt="16.png"></p>
+<p>然后点击<code>打开</code>，OllyDbg运行后，界面如下：</p>
+<p><img src="/img/17.png" alt="17.png"></p>
+<p>然后在反汇编窗口中滚动鼠标滑轮，在地址<code>004010CB</code>处按<code>F2</code>下断点，然后按<code>F9</code>运行，OllDbg断下来后，程序已经获取到了命令行字符串，同时我们可以观察，传给main函数的参数。如下图所示：</p>
+<p><img src="/img/18.png" alt="18.png"></p>
+<p>然后在反汇编窗口中右键选择<code>转到</code>-&gt;<code>表达式</code>，弹出一个对话框，在文本框中输入<code>0x00401000</code>后，点击<code>确定</code>。然后在地址<code>004010C5</code>按<code>F2</code>下断点，接着按<code>F9</code>，此时OllyDbg暂停下来。我们来到了main函数入口，是不是似曾相识？不过这次唯一不通的是我们给main函数的参数。这也是关键的地方。如下图所示：</p>
+<p><img src="/img/19.png" alt="19.png"></p>
+<p>接下来我们单步<code>F8</code>三次，到达地址<code>00401008</code>处。此时我们观察栈内存。如下图所示：</p>
+<p><img src="/img/20.png" alt="20.png"></p>
+<p>根据我们在PART1中所讲，printf函数中的参数为两个部分，第一个是<code>格式控制符</code>，第二个是<code>数据列表</code>，栈地址<code>0012FF48</code>中存放的是格式控制符<code>%p,%p,%p,%p</code>，这也是我们可以认为控制的输入参数。但是程序逻辑中并没有匹配的<code>数据列表</code>，但是对于printf函数来讲，它只会根据<code>格式控制符</code>中的控制符个数依次打印栈中的值。也就是说从栈地址<code>0012FF4C</code>到<code>0012FF58</code>这四个地址中存放的数值被printf函数当成<code>数据列表</code>，然后异常打印出来。我们再单步<code>F8</code>步过看效果。如下图所示：</p>
+<p><img src="/img/21.png" alt="21.png"></p>
+<p>看到了吧。我们通过输入格式符竟然可以泄漏栈上面的信息！</p>
+<p>####实验结果分析与总结</p>
+<p>在本部分中，我们通过两次调试，来证明只要我们输入特定的格式符进去，printf函数的数据列表是可控的，进而达到泄漏栈信息的目的。</p>
+<p>####思考</p>
+<p>1、既然printf函数能泄漏信息，那该如何进行防范呢？</p>
+<p>####题目</p>
+<p>1、本次实验中我们总共泄漏了几个栈内存信息？（）</p>
+<p>A 1</p>
+<p>B 2</p>
+<p>C 3</p>
+<p>D 4</p>
+<p>正确答案：D 解析：可以通过<code>%p,%p,%p,%p</code>判断。</p>
+<p>2、格式符<code>%p</code>是下列哪种数值的？（）</p>
+<p>A 十进制</p>
+<p>B 十六进制</p>
+<p>C 八进制</p>
+<p>D 二进制</p>
+<p>正确答案：B 解析：C语言基础知识。</p>
+<p>3、获取命令行的是哪个函数？（）</p>
+<p>A GetLine</p>
+<p>B GetCommandLineA</p>
+<p>C GetCommand</p>
+<p>正确答案：B 解析：实验步骤中有具体介绍。该函数为kernel32的导出函数。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/11/20/格式化漏洞原理/">格式化串漏洞基础</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
+        <p><span>发布时间:</span>2016年11月20日 - 21时39分</p>
+        <p><span>最后更新:</span>2016年11月20日 - 15时21分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/20/格式化漏洞原理/" title="格式化串漏洞基础">http://yoursite.com/2016/11/20/格式化漏洞原理/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/11/20/格式化漏洞原理/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2016/11/20/堆溢出/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          堆溢出基础
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/08/第一节/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="2016/11/20/格式化漏洞原理/" data-title="格式化串漏洞基础" data-url="http://yoursite.com/2016/11/20/格式化漏洞原理/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"null"};
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = '/js/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</div>
+
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/11/20/堆溢出/" title="上一篇: 堆溢出基础">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2016/11/08/第一节/" title="下一篇: ">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/改版1/">栈溢出相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/堆溢出/">堆溢出基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/格式化漏洞原理/">格式化串漏洞基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/第一节/">第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/堆/">堆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/动态2/">动态2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/02/动态1/">动态1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/23/NDK/">NDK</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2016 A2ir
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 25;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

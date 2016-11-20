@@ -9,7 +9,7 @@
 <meta property="og:title" content="Shurima">
 <meta property="og:url" content="http://yoursite.com/2016/11/03/堆/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:updated_time" content="2016-11-03T12:23:27.461Z">
+<meta property="og:updated_time" content="2016-11-20T13:24:04.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shurima">
   
@@ -127,7 +127,7 @@
 		
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/逆向/" style="font-size: 15px;">逆向</a>
+                        <a href="/tags/复现/" style="font-size: 10px;">复现</a> <a href="/tags/学习笔记/" style="font-size: 10px;">学习笔记</a> <a href="/tags/安卓/" style="font-size: 10px;">安卓</a> <a href="/tags/杂七杂八/" style="font-size: 13.33px;">杂七杂八</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/漏洞/" style="font-size: 10px;">漏洞</a> <a href="/tags/爱情/" style="font-size: 10px;">爱情</a> <a href="/tags/生日/" style="font-size: 10px;">生日</a> <a href="/tags/萌新/" style="font-size: 20px;">萌新</a> <a href="/tags/萌新向/" style="font-size: 13.33px;">萌新向</a> <a href="/tags/逆向/" style="font-size: 16.67px;">逆向</a>
                     </div>
                 </section>
                 
@@ -209,10 +209,22 @@
           
         <ul>
 <li><a id="more"></a>
-<h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1></li>
+<h1 id="在进行堆溢出之前"><a href="#在进行堆溢出之前" class="headerlink" title="在进行堆溢出之前"></a>在进行堆溢出之前</h1></li>
 </ul>
 <p><strong>Windows堆管理器可以划分为前段分配器和后端分配器</strong></p>
 <p>Windows vista以后的版本都默认采用了低碎片前端分配器.低碎片前端分配器非常复杂,其主要思想就是通过分配足够容纳请求大小的最小内存快来减少堆碎片</p>
+<h1 id="分配器"><a href="#分配器" class="headerlink" title="分配器"></a>分配器</h1><ul>
+<li><p>如果前端分配器无法满足，则这个请求将被转发到后端分配器，在<code>winxp</code>中，与前端分配器类似的是，后端分配器也有一张空闲列表，表中的每一项都是一个空闲链表。空闲列表的作用就是记录在指定堆中的所有空闲堆块，在空闲列表索引为0的项中的堆块大小大于1016字节而小于虚拟内存分配的限制（0x777F0字节）</p>
+</li>
+<li><p>其实说了半天，在<code>win7</code>中就没有专门的特定尺寸的空闲堆块了，<code>Windows7</code>使用单个空闲链表，该链表中包含了所有吃春的空闲对砍，大小按照圣序排列，与此同时，还有另一种链表，该链表结点的类型为listhint，该链表的结点指向了空闲链表中的结点，用来找到合适大小的结点来满足内存分配的要求。</p>
+</li>
+</ul>
+<h1 id="堆段"><a href="#堆段" class="headerlink" title="堆段"></a>堆段</h1><ul>
+<li><p>堆管理器通过<code>windows</code>虚拟内存管理器来分配一大块内存，堆管理器从虚拟内存管理器请求分配的内存块被称为<code>堆块</code></p>
+</li>
+<li><p>当堆管理器耗尽了已提交的空间时，堆段将进一步提交更多的内存，而堆管理器将对新提交的空间进行分割，当一个堆段耗尽了所有空间后，堆管理器将创建另一个新的堆段。并且新的堆段的大小将是之前堆段大小的两倍。</p>
+</li>
+</ul>
 
       
     </div>
@@ -224,7 +236,7 @@
         <p><span>本文标题:</span><a href="/2016/11/03/堆/"></a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年11月03日 - 20时08分</p>
-        <p><span>最后更新:</span>2016年11月03日 - 20时23分</p>
+        <p><span>最后更新:</span>2016年11月20日 - 21时24分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/03/堆/" title="">http://yoursite.com/2016/11/03/堆/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/11/03/堆/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -262,7 +274,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#堆"><span class="toc-number">1.</span> <span class="toc-text">堆</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在进行堆溢出之前"><span class="toc-number">1.</span> <span class="toc-text">在进行堆溢出之前</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分配器"><span class="toc-number">2.</span> <span class="toc-text">分配器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆段"><span class="toc-number">3.</span> <span class="toc-text">堆段</span></a></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
@@ -344,7 +356,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/第一节/">第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/堆/">堆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/动态2/">动态2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/02/动态1/">动态1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/23/NDK/">NDK</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/改版1/">栈溢出相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/堆溢出/">堆溢出基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/20/格式化漏洞原理/">格式化串漏洞基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/08/第一节/">第一节</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/堆/">堆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/03/动态2/">动态2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/02/动态1/">动态1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/23/NDK/">NDK</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/09/ARM/">ARM初步</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态3/">静态分析Android程序 (3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/08/静态1/">静态分析Android程序 (1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/匿名内部类/">简略的匿名内部类</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/静态2/">静态分析Android程序 (2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/02/SEH查看/">SEH查看相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/30/Android可执行文件/">Android程序生成与Dex结构相关（简略）</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/29/不明真相的Dalvik语法/">不明真相的Dalvik</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/28/生日快乐/">亲爱的生日快乐</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/25/CVE-2010-3333/">CVE-2010-3333调试，复现</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/07/Smali/">Smali</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
