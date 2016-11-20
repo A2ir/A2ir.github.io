@@ -222,163 +222,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>#栈溢出原理及简单利用</p>
-<p>##实验目的</p>
-<ul>
-<li>掌握栈溢出相关的基础知识</li>
-<li>掌握栈溢出的原理及相关操作方法</li>
-</ul>
-<p>##实验环境</p>
-<ul>
-<li><p>实验环境</p>
-<ul>
-<li>操作机<code>Windows xp</code></li>
-<li>OllyDbg</li>
-<li><p>Visual Studio 6.0</p>
-<p><strong>OllyDbg</strong></p>
-</li>
-</ul>
-<blockquote>
-<p>OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想，Ring 3级调试器，非常容易上手，己代替SoftICE成为当今最为流行的调试解密工具了。同时还支持插件扩展功能，是目前最强大的调试工具。</p>
-</blockquote>
-</li>
-</ul>
-<p>##实验内容</p>
-<p>###PART 1 基本的栈溢出原理</p>
-<h4 id="步骤一：了解掌握基础知识"><a href="#步骤一：了解掌握基础知识" class="headerlink" title="步骤一：了解掌握基础知识"></a>步骤一：了解掌握基础知识</h4><ul>
-<li><p>什么是栈？</p>
-<p><code>栈（stack）又名堆栈，它是一种运算受限的线性表。其限制是仅允许在表的一端进行插入和删除运算。这一端被称为栈顶，相对地，把另一端称为栈底。向一个栈插入新元素又称作进栈、入栈或压栈，它是把新元素放到栈顶元素的上面，使之成为新的栈顶元素；从一个栈删除元素又称作出栈或退栈，它是把栈顶元素删除掉，使其相邻的元素成为新的栈顶元素。</code></p>
-</li>
-<li><p>栈的示意图如下s</p>
-</li>
-</ul>
-<p><img src="/img/图片1.png" alt="1"></p>
-<ul>
-<li><p>两个汇编指令</p>
-<ul>
-<li>push <code>将数据压入栈</code></li>
-<li>pop <code>将数据弹出栈</code></li>
-</ul>
-</li>
-<li><p>栈在程序的运行中有着举足轻重的作用。最重要的是栈保存了一个函数调用时所需要的维护信息，这常常称之为堆栈帧或者活动记录。堆栈帧一般包含如下几方面的信息：</p>
-<ul>
-<li><p>1．函数的返回地址和参数</p>
-</li>
-<li><p>2．临时变量：包括函数的非静态局部变量以及编译器自动生成的其他临时变量。</p>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li><p>什么是栈溢出？</p>
-<p><code>栈溢出就是缓冲区溢出的一种。 由于缓冲区溢出而使得有用的存储单元被改写,往往会引发不可预料的后果。程序在运行过程中，为了临时存取数据的需要，一般都要分配一些内存空间，通常称这些空间为缓冲区。如果向缓冲区中写入超过其本身长度的数据，以致于缓冲区无法容纳，就会造成缓冲区以外的存储单元被改写，这种现象就称为缓冲区溢出。</code></p>
-</li>
-<li><p>栈溢出原理</p>
-<p><code>栈溢出就是不顾栈中分配的局部数据块大小，向该数据块写入了过多的数据，导致数据越界，结果覆盖了老的栈数据。 或者解释为 在长字符串中嵌入一段代码，并将过程的返回地址覆盖为这段代码的地址，这样当过程返回时，程序就转而开始执行这段自编的代码了.</code></p>
-</li>
-<li><p>汇编知识</p>
-<p><strong>mov</strong><br><code>赋值语句</code></p>
-<p><strong>call</strong><br><code>在执行call命令时，程序会执行两个操作</code></p>
-<ul>
-<li><p>1.向堆栈中压入下一行程序的地址  </p>
-</li>
-<li><p>2.JMP到call的子程序地址处</p>
-</li>
-</ul>
-<p><strong>RET</strong><br><code>与call命令想类似，在执行ret命令的同时，程序也会执行以下两个操作</code></p>
-<ul>
-<li><p>1.将当前的ESP中指向的地址出栈</p>
-</li>
-<li><p>2.JMP到这个地址</p>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="步骤二：编写测试程序以及逆向分析"><a href="#步骤二：编写测试程序以及逆向分析" class="headerlink" title="步骤二：编写测试程序以及逆向分析"></a>步骤二：编写测试程序以及逆向分析</h4><p>   新建一个文本文档，将其重命名为<code>2.c</code>，<code>右键</code> -&gt; <code>打开方式</code> -&gt; <code>Microsoft (R) Developer Studio</code>，用<code>Visual Studio 6.0</code>打开并编辑，写入如下内容：</p>
-   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">int test();</div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	printf(&quot;test\n&quot;);</div><div class="line">    test();</div><div class="line"></div><div class="line">	return 0;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">int  test()</div><div class="line">&#123;</div><div class="line">	int a=3;</div><div class="line">	int b=4;</div><div class="line">	printf(&quot;%d\n&quot;,a+b);</div><div class="line">	return 0 ;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>   依次点击 <code>Compile</code> -&gt; <code>Build</code> -&gt; <code>Execute</code>三个键，来运行程序：</p>
-<p>   编译结果如下</p>
-<p>   <img src="/img/图110.png" alt="2"></p>
-<p>   找出刚刚编译出的程序文件，位于<code>2.c</code>同一目录的<code>Debug</code>目录下，<code>2.exe</code>。双击打开OllyDbg，在OllyDbg界面的左上角点击<code>File</code> -&gt; <code>Open</code>，然后找到<code>test.exe</code>，选中后点击打开，界面会变成这样</p>
-<p> <img src="/img/图102.png" alt="2"></p>
-<p>   这个地方我们叫做<code>OEP</code>，即是程序的入口。很简单的一个小程序，主要是看栈的变化</p>
-<p>   我们右键点击OllyDbg的反汇编窗口，点击<code>转到-&gt;表达式</code> 输入<code>00401045</code>，跳转到<code>00401045</code>  这个地址 对应的汇编指令为<code>call 4.00401005</code>，按下<code>F2</code>下断点。</p>
-<p>   <img src="/img/图103.png" alt="2"></p>
-<p>   接下来按下<code>F9</code>让OllyDbg运行程序，发现会断在这个断点。</p>
-<p>   进入之前。这里有个小细节需要注意，那就是<code>call</code>的下一行代码地址是<code>0040104A</code>，该地址对应的指令是<code>xor eax,eax</code></p>
-<p>   接下来按两下<code>F7</code>来到如下图的位置</p>
-<p><img src="/img/图104.png" alt="2"></p>
-<p>我们可以观察<code>0012FF30</code>储存的内容刚好就是<code>call</code>的下一行代码地址<code>0040104A</code></p>
-<p>再按四次<code>F7</code>，来到下图的位置。</p>
-<p>   <img src="/img/图201.jpg" alt="3"></p>
-<p>   <code>00401070</code>地址处对应的指令<code>push ebp</code>意思是<code>保存ebp</code>，<code>00401071</code>地址处对应的指令<code>mov ebp,esp</code>和<code>00401073</code>地址处对应的指令<code>sub esp,0x48</code>表示<code>ebp=esp</code> <code>sub+0x48</code>（抬升栈顶，形成栈帧），进入函数之后，观察发现<code>ebp</code>指向<code>0012FF2C</code>，而这个函数的返回地址则在<code>ebp</code>下，<code>ebp</code>指向<code>0012FF2C</code> 即是ebp+4的位置，储存着<code>0040104A</code>这个地址。</p>
-<p>   <img src="/img/图20.png" alt="4"></p>
-<p>   在程序中可以看到定义了两个参数，在这里它们进入了栈，观察发现遵循了<code>后入在顶</code>的原则。</p>
-<p><img src="/img/图105.png" alt="4"></p>
-<p>   接下来一直<code>F8</code>到如图的位置，发现了红框中连续三个<code>pop</code>指令与<code>add</code>指令，以及函数返回前的栈结构。</p>
-<p>   再按一下<code>F8</code>返回。</p>
-<p>   <img src="/img/图106.png" alt="4"></p>
-<p>   可以看到<code>esp指向``0012FF34</code>这个地址，刚好指向上个函数的返回地址<code>0012FF30</code>下一行。</p>
-<p>####实验结果分析与总结</p>
-<p>本节内容主要让大家了解栈溢出相关的基础知识。便于后面的实验</p>
-<h4 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h4><p>1、函数是如何开辟栈空间的？<br>2、栈帧中的相关变量的内存是如何分部的？</p>
-<p>####题目</p>
-<p>1.数据入栈的顺序 （）<br>A  先进先出<br>B 先进后出<br>C 通过系统中的链表选择储存地址<br>D 由EIP决定</p>
-<p>正确答案 B</p>
-<p>解析：数据入栈的顺序，计算机定义的便是先进后出，后进先出</p>
-<p>2.call 指令的意义（）<br>A 调用函数<br>B JMP到某个地址<br>C 条件判断<br>D  普通的汇编指令。</p>
-<p> 正确答案 A</p>
-<p> 解析：call指令调用函数，其他答案例如jmp到某个地址，回答的并不全面，事实上还有压栈的操作。</p>
-<p>3.三个pop指令和add指令对栈的影响？</p>
-<p>正确答案：恢复之前的寄存器所保存的值，然后取消栈帧，恢复到之前的栈布局实现堆栈平衡</p>
-<p>###PART2: 简单的栈溢出实验</p>
-<ul>
-<li><p>本部分主要内容</p>
-</li>
-<li><p>明白栈溢出发生的时刻，以及对栈的改变</p>
-</li>
-</ul>
-<h4 id="步骤一：栈溢出的时刻以及影响"><a href="#步骤一：栈溢出的时刻以及影响" class="headerlink" title="步骤一：栈溢出的时刻以及影响"></a>步骤一：栈溢出的时刻以及影响</h4><blockquote>
-<p>很简单，我们通过上面一个小程序进行一些小改动。</p>
-</blockquote>
-<p>  新建一个文本文档，将其重命名为<code>Two.c</code>，右键 -&gt; 打开方式 -&gt; Microsoft (R) Developer Studio，用Visual Studio 6.0打开并编辑，写入如下内容：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;string.h&gt;</div><div class="line">int test();</div><div class="line"></div><div class="line">char stackbreak[1024]=</div><div class="line">&quot;\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff&quot;</div><div class="line">&quot;\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff&quot;</div><div class="line">&quot;\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff&quot;</div><div class="line">&quot;\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff&quot;</div><div class="line">&quot;\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff&quot;;</div><div class="line"></div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">	printf(&quot;test\n&quot;);</div><div class="line">    test();</div><div class="line">	return 0;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">int  test()</div><div class="line">&#123;</div><div class="line">	int a=3;</div><div class="line">	int b=4;</div><div class="line">char buffer[10];</div><div class="line">strcpy(buffer,stackbreak);  //在这里崩溃</div><div class="line">return 0 ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>  依次点击 Compile -&gt; Build -&gt; Execute三个键，来运行程序：</p>
-<p>  <img src="/img/图5.png" alt="5"></p>
-<p>  果不其然的崩溃了，那么我们用OD来看看发生了什么</p>
-<p>  找出刚刚编译出的程序文件，位于<code>Two .c</code>同一目录的<code>Debug</code>目录下，<code>Two.exe</code>。双击打开OllyDbg，在OllyDbg界面的左上角点击File -&gt; Open，然后找到<code>Two.exe</code>，选中后点击打开，界面会变成这样：</p>
-<p>  <img src="/img/图111.png" alt="6"></p>
-<p>  我们右键点击OllyDbg的反汇编窗口，点击转到-&gt;表达式 输入<code>00401045</code>，跳转到<code>00401045</code>  这个地址 对应的汇编指令为<code>call 4.00401005</code>，按下<code>F2</code>下断点。</p>
-<p>接下来按下<code>F9</code>让OllyDbg运行程序，发现会断在这个断点。</p>
-<p>  <img src="/img/图112.png" alt="6"></p>
-<p>  连续按下两次<code>F7</code> 进入这个函数，并且运行到如图所示的位置。</p>
-<p>  <img src="/img/图113.png" alt="6"></p>
-<p>  由上面的例子已经知道<code>0012FF30</code>储存的是函数的返回地址。<br>接下来我们通过拖拽反汇编窗口，到<code>0040109F</code>，这个地址对应的汇编指令为<code>call Two.strcpysgzeHeaderListle_pages</code><br>由C语言<code>strcpy(buffer,stackbreak)</code> 可以看出，进入strcpy函数之前要传入两个参数，在OllyDbg界面可以看到地址位于<code>00401096</code>的<code>push offset Two.stackbreakdecommitable_</code>指令，与位于 <code>0040109B</code> 的<code>lea eax,[local.5]</code>和<code>0040109E</code>的 <code>push eax</code>指令共同完成了传参的任务。<br>，以下是两个变量储存的位置的截图</p>
-<p>  <img src="/img/图202.png" alt="6"></p>
-<p>  这个是存储着我们定义的字符串的地址</p>
-<p>  <img src="/img/图203.png" alt="6"></p>
-<p>这里是即将被覆盖的地址的起始位置以及EBP的指向。</p>
-<p>  <img src="/img/图114.png" alt="6"></p>
-<p>由上文可知，程序在<code>0040109F</code>处执行<code>strcpy</code>，固在此处按下<code>F2</code>下断点，再按F9让程序运行,断在了<code>0040109F</code>这个地址</p>
-<p>  <img src="/img/图115.png" alt="6"></p>
-<p>  在执行<code>strcpy</code>前的栈内存分部情况，此时按下<code>F8</code>，观察栈的变化</p>
-<p>  <img src="/img/图116.png" alt="7"></p>
-<p>  在执行<code>strcpy</code>之后的栈内存分部情况，发现原本属于返回地址,即是<code>0012FF30</code>的地方已经被ff填充掉了，也就是说现在的返回地址是<code>FFFFFFFF</code>，这显然是不可达的。<br>于是我们继续<code>F8</code>运行直到<code>RETN</code>指令被执行，结果如下图</p>
-<p>  <img src="/img/图8.png" alt="8"></p>
-<p>  于是程序顺理成章的崩溃掉了。</p>
-<p>####实验结果分析与总结</p>
-<p>  本节内容主要让大家编写，并且逆向调试真正会发生栈溢出的程序</p>
-<p>####思考</p>
-<p>1、栈溢出发生时，覆盖了哪些内存地址？</p>
-<p>2、函数返回时，EIP的值是可以控制的吗？</p>
-<p>####题目</p>
-<p>1.栈溢出发生的条件（）<br>A 栈空间开辟不足<br>B 数据填充不足<br>C 栈发生崩溃<br>D 向缓冲区中写入超过其本身长度的数据</p>
-<p>  正确答案： D</p>
-<p>  解析：由于写入的数据超出了申请的空间，导致了后续的数据被覆盖，从而发生栈溢出。</p>
-<p>2.本次实验中我们覆盖的返回地址是（）<br>A 0012FF80<br>B 0040104A<br>C 0065DD00<br>D 0012B880</p>
-<p>正确答案：B</p>
-<p>解析：根据函数调用规则可知，A选项为EBP，B选项为函数返回地址，C和D选项为函数的参数</p>
-
+              <ul>
+<li>
+          
       
     </div>
     
@@ -395,6 +241,10 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂七杂八/">杂七杂八</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/萌新向/">萌新向</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a  href="/2016/11/20/改版1/#more">艾泽拉斯 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>

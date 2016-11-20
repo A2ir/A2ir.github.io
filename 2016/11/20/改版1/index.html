@@ -5,46 +5,10 @@
   
   <title>栈溢出相关 | Shurima</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#栈溢出原理及简单利用
-##实验目的
-
-掌握栈溢出相关的基础知识
-掌握栈溢出的原理及相关操作方法
-
-##实验环境
-
-实验环境
-
-操作机Windows xp
-OllyDbg
-Visual Studio 6.0
-OllyDbg
-
-
-
-OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想，Ring 3级调试器，非常容易上手，己代替SoftICE成为当今最为流行的调试解密工具了。同">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="栈溢出相关">
 <meta property="og:url" content="http://yoursite.com/2016/11/20/改版1/index.html">
 <meta property="og:site_name" content="Shurima">
-<meta property="og:description" content="#栈溢出原理及简单利用
-##实验目的
-
-掌握栈溢出相关的基础知识
-掌握栈溢出的原理及相关操作方法
-
-##实验环境
-
-实验环境
-
-操作机Windows xp
-OllyDbg
-Visual Studio 6.0
-OllyDbg
-
-
-
-OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想，Ring 3级调试器，非常容易上手，己代替SoftICE成为当今最为流行的调试解密工具了。同">
 <meta property="og:image" content="http://yoursite.com/img/图片1.png">
 <meta property="og:image" content="http://yoursite.com/img/图110.png">
 <meta property="og:image" content="http://yoursite.com/img/图102.png">
@@ -64,27 +28,9 @@ OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想
 <meta property="og:image" content="http://yoursite.com/img/图115.png">
 <meta property="og:image" content="http://yoursite.com/img/图116.png">
 <meta property="og:image" content="http://yoursite.com/img/图8.png">
-<meta property="og:updated_time" content="2016-11-20T07:21:48.446Z">
+<meta property="og:updated_time" content="2016-11-20T13:51:39.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="栈溢出相关">
-<meta name="twitter:description" content="#栈溢出原理及简单利用
-##实验目的
-
-掌握栈溢出相关的基础知识
-掌握栈溢出的原理及相关操作方法
-
-##实验环境
-
-实验环境
-
-操作机Windows xp
-OllyDbg
-Visual Studio 6.0
-OllyDbg
-
-
-
-OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想，Ring 3级调试器，非常容易上手，己代替SoftICE成为当今最为流行的调试解密工具了。同">
 <meta name="twitter:image" content="http://yoursite.com/img/图片1.png">
   
     <link rel="alternative" href="/atom.xml" title="Shurima" type="application/atom+xml">
@@ -307,14 +253,15 @@ OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>#栈溢出原理及简单利用</p>
-<p>##实验目的</p>
-<ul>
+        <ul>
+<li><a id="more"></a>
+</li>
+</ul>
+<h1 id="栈溢出原理及简单利用"><a href="#栈溢出原理及简单利用" class="headerlink" title="栈溢出原理及简单利用"></a>栈溢出原理及简单利用</h1><h2 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h2><ul>
 <li>掌握栈溢出相关的基础知识</li>
 <li>掌握栈溢出的原理及相关操作方法</li>
 </ul>
-<p>##实验环境</p>
-<ul>
+<h2 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h2><ul>
 <li><p>实验环境</p>
 <ul>
 <li>操作机<code>Windows xp</code></li>
@@ -328,9 +275,7 @@ OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想
 </blockquote>
 </li>
 </ul>
-<p>##实验内容</p>
-<p>###PART 1 基本的栈溢出原理</p>
-<h4 id="步骤一：了解掌握基础知识"><a href="#步骤一：了解掌握基础知识" class="headerlink" title="步骤一：了解掌握基础知识"></a>步骤一：了解掌握基础知识</h4><ul>
+<h2 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h2><h3 id="PART-1-基本的栈溢出原理"><a href="#PART-1-基本的栈溢出原理" class="headerlink" title="PART 1 基本的栈溢出原理"></a>PART 1 基本的栈溢出原理</h3><h4 id="步骤一：了解掌握基础知识"><a href="#步骤一：了解掌握基础知识" class="headerlink" title="步骤一：了解掌握基础知识"></a>步骤一：了解掌握基础知识</h4><ul>
 <li><p>什么是栈？</p>
 <p><code>栈（stack）又名堆栈，它是一种运算受限的线性表。其限制是仅允许在表的一端进行插入和删除运算。这一端被称为栈顶，相对地，把另一端称为栈底。向一个栈插入新元素又称作进栈、入栈或压栈，它是把新元素放到栈顶元素的上面，使之成为新的栈顶元素；从一个栈删除元素又称作出栈或退栈，它是把栈顶元素删除掉，使其相邻的元素成为新的栈顶元素。</code></p>
 </li>
@@ -474,7 +419,7 @@ OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想
         <p><span>本文标题:</span><a href="/2016/11/20/改版1/">栈溢出相关</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 A2ir 的个人博客">A2ir</a></p>
         <p><span>发布时间:</span>2016年11月20日 - 21时39分</p>
-        <p><span>最后更新:</span>2016年11月20日 - 15时21分</p>
+        <p><span>最后更新:</span>2016年11月20日 - 21时51分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/20/改版1/" title="栈溢出相关">http://yoursite.com/2016/11/20/改版1/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/11/20/改版1/　　作者: A2ir" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
@@ -503,7 +448,7 @@ OLLYDBG是一个新的动态追踪工具，将IDA与SoftICE结合起来的思想
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#步骤一：了解掌握基础知识"><span class="toc-number">1.</span> <span class="toc-text">步骤一：了解掌握基础知识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#步骤二：编写测试程序以及逆向分析"><span class="toc-number">2.</span> <span class="toc-text">步骤二：编写测试程序以及逆向分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#思考"><span class="toc-number">3.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#步骤一：栈溢出的时刻以及影响"><span class="toc-number">4.</span> <span class="toc-text">步骤一：栈溢出的时刻以及影响</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#栈溢出原理及简单利用"><span class="toc-number">1.</span> <span class="toc-text">栈溢出原理及简单利用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#实验目的"><span class="toc-number">1.1.</span> <span class="toc-text">实验目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验环境"><span class="toc-number">1.2.</span> <span class="toc-text">实验环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验内容"><span class="toc-number">1.3.</span> <span class="toc-text">实验内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PART-1-基本的栈溢出原理"><span class="toc-number">1.3.1.</span> <span class="toc-text">PART 1 基本的栈溢出原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#步骤一：了解掌握基础知识"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">步骤一：了解掌握基础知识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#步骤二：编写测试程序以及逆向分析"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">步骤二：编写测试程序以及逆向分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#思考"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">思考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#步骤一：栈溢出的时刻以及影响"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">步骤一：栈溢出的时刻以及影响</span></a></li></ol></li></ol></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
